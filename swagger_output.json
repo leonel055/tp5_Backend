@@ -1,0 +1,693 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API TP5",
+    "description": "Documentación de la API de Socios, Transacciones, Empleados y Publicaciones.",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Socios",
+      "description": "Operaciones sobre socios."
+    },
+    {
+      "name": "Transacciones",
+      "description": "Operaciones sobre transacciones."
+    },
+    {
+      "name": "Empleados",
+      "description": "Operaciones sobre empleados."
+    },
+    {
+      "name": "Publicaciones",
+      "description": "Operaciones sobre publicaciones."
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/api/socios/": {
+      "get": {
+        "tags": [
+          "Socios"
+        ],
+        "summary": "Obtener todos los socios",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Lista de socios obtenida con éxito."
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Socios"
+        ],
+        "summary": "Crear un socio",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Datos del socio a crear.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Socio"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Socio guardado correctamente."
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/socios/activos": {
+      "get": {
+        "tags": [
+          "Socios"
+        ],
+        "summary": "Obtener socios activos",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Lista de socios activos."
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/socios/{id}": {
+      "put": {
+        "tags": [
+          "Socios"
+        ],
+        "summary": "Modificar un socio",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID del socio"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Socio"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Socio actualizado."
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Socios"
+        ],
+        "summary": "Eliminar un socio",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID del socio"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Socio eliminado."
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    },
+    "/api/transacciones/": {
+      "post": {
+        "tags": [
+          "Transacciones"
+        ],
+        "summary": "Crear una transacción",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Datos de la transacción a crear.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Transaccion"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transacción guardada correctamente."
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Transacciones"
+        ],
+        "summary": "Obtener todas las transacciones",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Lista de transacciones obtenida con éxito."
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/transacciones/cliente/{email}": {
+      "get": {
+        "tags": [
+          "Transacciones"
+        ],
+        "summary": "Obtener transacciones por email del cliente",
+        "description": "",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Email del cliente"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Historial de transacciones del cliente."
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/transacciones/idiomas/{origen}/{destino}": {
+      "get": {
+        "tags": [
+          "Transacciones"
+        ],
+        "summary": "Obtener transacciones por idioma origen y destino",
+        "description": "",
+        "parameters": [
+          {
+            "name": "origen",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Idioma origen"
+          },
+          {
+            "name": "destino",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Idioma destino"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transacciones filtradas por idiomas."
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/transacciones/{id}": {
+      "put": {
+        "tags": [
+          "Transacciones"
+        ],
+        "summary": "Modificar una transacción",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID de la transacción"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Transaccion"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transacción actualizada."
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Transacción no encontrada."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Transacciones"
+        ],
+        "summary": "Eliminar una transacción",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID de la transacción"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transacción eliminada."
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Transacción no encontrada."
+          }
+        }
+      }
+    },
+    "/api/empleados/": {
+      "get": {
+        "tags": [
+          "Empleados"
+        ],
+        "summary": "Obtener todos los empleados",
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "Lista de empleados obtenida con éxito."
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Empleados"
+        ],
+        "summary": "Crear un empleado",
+        "description": "",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Datos del empleado a crear.",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Empleado"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Empleado guardado correctamente."
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/empleados/{id}": {
+      "get": {
+        "tags": [
+          "Empleados"
+        ],
+        "summary": "Obtener un empleado por ID",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID del empleado"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Empleado obtenido con éxito."
+          },
+          "404": {
+            "description": "Empleado no encontrado."
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Empleados"
+        ],
+        "summary": "Modificar un empleado",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID del empleado"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Empleado"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Empleado actualizado."
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Empleado no encontrado."
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Empleados"
+        ],
+        "summary": "Eliminar un empleado",
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID del empleado"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Empleado eliminado."
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Empleado no encontrado."
+          }
+        }
+      }
+    },
+    "/api/publicaciones/buscar": {
+      "get": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "titulo",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "vigente",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "titulo",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "vigente",
+            "in": "query",
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "titulo": {
+                  "example": "any"
+                },
+                "vigente": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/api/publicaciones/": {
+      "get": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "post": {
+        "description": "",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/publicaciones/{id}": {
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Socio": {
+      "type": "object",
+      "properties": {
+        "nombre": {
+          "type": "string",
+          "example": "Leonel"
+        },
+        "apellido": {
+          "type": "string",
+          "example": "Avendaño"
+        },
+        "foto": {
+          "type": "string",
+          "example": "https://i.pravatar.cc/150"
+        },
+        "dni": {
+          "type": "string",
+          "example": "46596991"
+        },
+        "numeroSocio": {
+          "type": "number",
+          "example": 1
+        },
+        "activo": {
+          "type": "boolean",
+          "example": true
+        }
+      }
+    },
+    "Transaccion": {
+      "type": "object",
+      "properties": {
+        "idiomaOrigen": {
+          "type": "string",
+          "example": "es"
+        },
+        "textoOrigen": {
+          "type": "string",
+          "example": "Hola mundo"
+        },
+        "idiomaDestino": {
+          "type": "string",
+          "example": "en"
+        },
+        "textoDestino": {
+          "type": "string",
+          "example": "Hello world"
+        },
+        "emailCliente": {
+          "type": "string",
+          "example": "juan@mail.com"
+        }
+      }
+    },
+    "Empleado": {
+      "type": "object",
+      "properties": {
+        "apellido": {
+          "type": "string",
+          "example": "López"
+        },
+        "nombre": {
+          "type": "string",
+          "example": "Carlos"
+        },
+        "dni": {
+          "type": "string",
+          "example": "11223344"
+        },
+        "email": {
+          "type": "string",
+          "example": "carlos@mail.com"
+        }
+      }
+    },
+    "Publicacion": {
+      "type": "object",
+      "properties": {
+        "titulo": {
+          "type": "string",
+          "example": "Introducción a Node.js"
+        },
+        "contenido": {
+          "type": "string",
+          "example": "Node.js es un entorno de ejecución..."
+        },
+        "imagenAsociada": {
+          "type": "string",
+          "example": ""
+        },
+        "fechaPublicacion": {
+          "type": "string",
+          "example": "2025-06-01"
+        },
+        "vigente": {
+          "type": "boolean",
+          "example": true
+        },
+        "empleadoId": {
+          "type": "number",
+          "example": 1
+        }
+      }
+    }
+  }
+}
